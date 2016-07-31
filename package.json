@@ -1,0 +1,23 @@
+{
+  "dependencies": {
+    "express": "^4.14.0",
+    "phantomjs": "^2.1.7",
+    "webcamera": "^0.2.2"
+  },
+  "description": "Higher-level content negotiation",
+  "devDependencies": {},
+  "author": {
+    "email":"fangfeng335@qq.com",
+    "name":"tinhour"
+  },
+  "homepage": "https://github.com/tinhour/screencapture-sendmail",
+  "installable": true,
+  "main":"index.js",
+  "name": "screencapture-sendmail",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tinhour/screencapture-sendmail"
+  },
+  "scripts": {},
+  "version": "0.0.1"
+}
