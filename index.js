@@ -18,7 +18,7 @@ var transporter = nodemailer.createTransport({
     auth: {
         user: 'fangfeng335@qq.com',
         //这里密码不是qq密码，是你设置的smtp密码
-        pass: 'fijgscvarnvpcacd'
+        pass: 'myPassForSmtp'
     }
 });
 
