@@ -1,5 +1,6 @@
 var process=require('process')
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0'
+var os=require('os');
 var nodemailer = require('nodemailer');
 var Camera = require('webcamera');
 var fs = require('fs');
@@ -21,10 +22,11 @@ var transporter = nodemailer.createTransport({
         pass: 'myPassForSmtp'
     }
 });
-
+var phantomPath = "./node_modules/phantomjs/bin/phantomjs";
+phantomPath += /window/i.test(os.type()) ? ".exe" : "";
 var camera = Camera.create({
     timeout: 1000 * 30,
-    phantom:"./node_modules/phantomjs/bin/phantomjs"
+    phantom: phantomPath
 });
 
 /**
@@ -63,7 +65,7 @@ app.use(function (req, res, next) {
 app.get('/',function (req,res) {
     var str='<h1>Usage:</h1>'
     str+='<h2>/sendMail?form=mail@mail.com&to=mail@mail.com&subject=subject&content=emailContent</h2>'
-    str+='<h2>/capturePage?url=decodeURIComponet("http://www.baidu.com")&fileName=baidu.png</h2>'
+    str+='<h2>/capturePage?url=encodeURIComponent("http://www.qq.com")&fileName=qq.png</h2>'
     res.end(str)
 })
 app.get('/sendMail', function (req, res) {
@@ -78,6 +80,7 @@ app.get('/sendMail', function (req, res) {
 });
 
 app.get('/capturePage', function(req, res) {
+    var captureStart=new Date();
     var url = req.query.url;
     if (!validateUrl(url)) {
         res.json({
@@ -99,7 +102,7 @@ app.get('/capturePage', function(req, res) {
                 });
                 s.on('end', function() {
                     res.end();
-                    console.log('get pictrue ok', fileName);
+                    console.log('get pictrue %s ok cost %s s', fileName,(new Date()-captureStart)/1000);
                 });
             }
         });
