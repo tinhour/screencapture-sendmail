@@ -97,9 +97,7 @@ app.get('/capturePage', function(req, res) {
             } else {
                 var fileName = req.query.fileName||analyseName(url);
                 res.attachment(fileName);
-                s.on('data', function(data) {
-                    res.write(data);
-                });
+                s.pipe(res)
                 s.on('end', function() {
                     res.end();
                     console.log('get pictrue %s ok cost %s s', fileName,(new Date()-captureStart)/1000);
