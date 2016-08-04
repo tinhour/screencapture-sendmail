@@ -6,8 +6,9 @@ var Camera = require('webcamera');
 var fs = require('fs');
 var crypto = require('crypto');
 var express = require('express');
+var stream = require('stream');
 var app = express();
-var server = app.listen(3001, function () {
+var server = app.listen(3000, function () {
   var host = server.address().address;
   var port = server.address().port;
   console.log('App listening at http://%s:%s', host, port);
@@ -63,9 +64,9 @@ app.use(function (req, res, next) {
   next();
 })
 app.get('/',function (req,res) {
-    var str='<h1>Usage:</h1>'
+    var str='<html><head><title>Usage</title></head><h1>Usage:</h1>'
     str+='<h2>/sendMail?form=mail@mail.com&to=mail@mail.com&subject=subject&content=emailContent</h2>'
-    str+='<h2>/capturePage?url=encodeURIComponent("http://www.qq.com")&fileName=qq.png</h2>'
+    str+='<h2>/capturePage?url=encodeURIComponent("http://www.qq.com")&fileName=qq.png</h2></html>'
     res.end(str)
 })
 app.get('/sendMail', function (req, res) {
@@ -88,21 +89,26 @@ app.get('/capturePage', function(req, res) {
             message: url + ' not validated'
         })
     } else {
-        camera.shotStream(url, function(err, s) {
-            if (err) {
+        camera.shotStream(url, function(err, s,pid) {
+            var responseMsg="";
+            s.on('error',function (err) {
                 res.status(500).json({
                     error: 'capture url fail',
                     message: err
                 })
-            } else {
+            })
+            s.on('data',function (data) {
+                console.log("s.on.data")
+                responseMsg+=data.toString('base64');
+            })
+            s.on('end', function() {
                 var fileName = req.query.fileName||analyseName(url);
-                res.attachment(fileName);
-                s.pipe(res)
-                s.on('end', function() {
-                    res.end();
-                    console.log('get pictrue %s ok cost %s s', fileName,(new Date()-captureStart)/1000);
-                });
-            }
+                //res.attachment(fileName)
+                var img='<img src="data:image/png;base64,'+responseMsg+'" />'
+                res.send(img)
+                res.end()
+                console.log('get pictrue %s ok cost %s s size %s kb', fileName,(new Date()-captureStart)/1000,responseMsg.length/1024);
+            });
         });
     }
 });
