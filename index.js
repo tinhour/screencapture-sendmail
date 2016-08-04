@@ -98,7 +98,6 @@ app.get('/capturePage', function(req, res) {
                 })
             })
             s.on('data',function (data) {
-                console.log("s.on.data")
                 responseMsg+=data.toString('base64');
             })
             s.on('end', function() {
