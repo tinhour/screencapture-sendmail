@@ -4,7 +4,7 @@
     "phantomjs": "^2.1.7",
     "webcamera": "^0.2.2"
   },
-  "description": "Higher-level content negotiation",
+  "description": "screenshot capture service baseon phatomjs",
   "devDependencies": {},
   "author": {
     "email":"fangfeng335@qq.com",
@@ -12,7 +12,7 @@
   },
   "homepage": "https://github.com/tinhour/screencapture-sendmail",
   "installable": true,
-  "main":"index.js",
+  "main":"screencapture.js",
   "name": "screencapture-sendmail",
   "repository": {
     "type": "git",
