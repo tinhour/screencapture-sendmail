@@ -68,9 +68,7 @@ app.get('/capturePageDownload', function(req, res) {
     })
   } else {
     camera.shotStream(url, {
-      width: "all",
-      height: "all",
-      waitTime: 6000
+      renderDelay: 6000
     }, function(err, s) {
       s.on('error',function (err) {
         console.log('[%s] get ScreenShot fail',formatTime(),err)
@@ -98,9 +96,7 @@ app.get('/capturePageShow', function(req, res) {
         })
     } else {
         camera.shotStream(url, {
-          width: "all",
-          height: "all",
-          waitTime: waitTime
+          renderDelay: waitTime
          }, function(err, s,pid) {
             var responseMsg="";
             s.on('error',function (err) {
@@ -135,9 +131,7 @@ app.get('/capturePageBase64JSON', function(req, res) {
         })
     } else {
         camera.shotStream(url, {
-          width: "all",
-          height: "all",
-          waitTime: waitTime
+          renderDelay: waitTime
          }, function(err, s,pid) {
             var responseMsg="";
             s.on('error',function (err) {
