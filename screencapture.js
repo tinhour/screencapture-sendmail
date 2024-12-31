@@ -45,7 +45,7 @@ app.use(function(req, res, next) {
   console.log('['+formatTime()+']',req.method, req.url);
   next();
 });
-
+// 首页和使用示例
 app.get('/', function(req, res) {
   var str = '<html><head><title>Usage</title></head><body><h1>Usage:</h1>'
   str += '<h4><a href="/capturePageDownload?url=https%3A%2F%2Flogin-beta.huawei.com%2Flogin%2F">/capturePageDownload?url=encodeURIComponent("https://login-beta.huawei.com/login/")</a></h4>'
@@ -56,7 +56,7 @@ app.get('/', function(req, res) {
   str += '<h4><a href="/capturePageBase64JSON?url=http%3A%2F%2Fw3m.huawei.com%2Fm%2Fservlet%2Findex&waitTime=8000">/capturePageBase64JSON?url=encodeURIComponent("http://w3m.huawei.com/m/servlet/index")&waitTime=8000</a></h4></body></html>'
   res.end(str)
 })
-
+// 获取截图并下载图片文件 
 app.get('/capturePageDownload', function(req, res) {
   var url = req.query.url;
   var startTime=new Date();
@@ -84,6 +84,7 @@ app.get('/capturePageDownload', function(req, res) {
     });
   }
 });
+// 获取截图并显示图片
 app.get('/capturePageShow', function(req, res) {
     var captureStart=new Date();
     var url = req.query.url;
@@ -119,6 +120,7 @@ app.get('/capturePageShow', function(req, res) {
         });
     }
 });
+// 获取截图并返回base64编码的json
 app.get('/capturePageBase64JSON', function(req, res) {
     var captureStart=new Date();
     var url = req.query.url;
@@ -152,7 +154,7 @@ app.get('/capturePageBase64JSON', function(req, res) {
         });
     }
 });
-
+// 启动服务
 var service = app.listen(3000, function() {
   var port = service.address().port;
   console.log('[%s] Service listening at port %s cost Time %ds',formatTime(),port, (new Date() - startTime) / 1000);
