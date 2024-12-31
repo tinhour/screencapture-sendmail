@@ -68,7 +68,7 @@ app.get('/capturePageDownload', function(req, res) {
     })
   } else {
     camera.shotStream(url, {
-      renderDelay: 6000
+      renderDelay: process.env.SCREENSHOT_TIMEOUT||6000
     }, function(err, s) {
       s.on('error',function (err) {
         console.log('[%s] get ScreenShot fail',formatTime(),err)
@@ -155,7 +155,7 @@ app.get('/capturePageBase64JSON', function(req, res) {
     }
 });
 // 启动服务
-var service = app.listen(3000, function() {
+var service = app.listen(process.env.SCREENCAPTURE_PORT||3000, function() {
   var port = service.address().port;
   console.log('[%s] Service listening at port %s cost Time %ds',formatTime(),port, (new Date() - startTime) / 1000);
   console.log('[%s] double press Ctrl+C to stop service',formatTime())

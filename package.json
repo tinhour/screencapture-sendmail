@@ -18,6 +18,9 @@
     "type": "git",
     "url": "https://github.com/tinhour/screencapture-sendmail"
   },
-  "scripts": {},
+  "scripts": {
+    "screencaptureService": "node screencapture.js",
+    "sendmailService": "node sendmail.js"
+  },
   "version": "0.0.1"
 }

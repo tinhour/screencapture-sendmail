@@ -39,8 +39,10 @@ npm install
 # 配置环境变量
 cp .env.example .env
 
-# 启动服务
-npm start
+# 启动截图服务
+npm run screencaptureService
+# 启动邮件服务
+npm run sendmailService
 ```
 
 ## 📚 API 文档
@@ -97,16 +99,24 @@ Content-Type: application/json
 
 ```env
 # 服务器配置
-PORT=3000
+# 截图服务端口
+SCREENCAPTURE_PORT=3000
+# 邮件服务端口
+MAIL_PORT=3001
 
 # SMTP 配置
-SMTP_HOST=smtp.example.com
-SMTP_PORT=587
+# 邮件服务地址
+SMTP_HOST=smtp.qq.com
+# 邮件服务端口          
+SMTP_PORT=465
+# 邮件服务用户名
 SMTP_USER=your-email@example.com
+# 邮件服务密码 
 SMTP_PASS=your-password
 
 # 截图配置
-SCREENSHOT_TIMEOUT=30000
+# 默认等待截图完成时间
+SCREENSHOT_TIMEOUT=6000
 ```
 
 ## 📝 使用示例
@@ -153,5 +163,5 @@ const postResult = await postResponse.json();
 
 ## 👨‍💻 作者
 
-tinhour - [@tinhour](https://github.com/tinhour)
+ [@tinhour](https://github.com/tinhour)
 
