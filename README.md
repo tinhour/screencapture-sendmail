@@ -62,9 +62,8 @@ GET /capturePageBase64JSON?url=https://example.com
 
 请求参数：
 - `url`: 必填，要截图的网页地址
-- `width`: 可选，截图宽度（默认：1920）
-- `height`: 可选，截图高度（默认：1080）
-- `fullPage`: 可选，是否截取完整页面（默认：false）
+- `waitTime`: 等待时间（默认：6000ms）
+- `fileName`: 下载文件名（默认：根据url生成文件名）
 
 ### 邮件服务
 

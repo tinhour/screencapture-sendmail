@@ -59,6 +59,7 @@ app.get('/', function(req, res) {
 // 获取截图并下载图片文件 
 app.get('/capturePageDownload', function(req, res) {
   var url = req.query.url;
+  var waitTime=req.query.waitTime||process.env.SCREENSHOT_TIMEOUT||6000;
   var startTime=new Date();
   if (!validateUrl(url)) {
     console.log('[%s] url format error  [%s] not validated',formatTime(),url);
@@ -68,7 +69,7 @@ app.get('/capturePageDownload', function(req, res) {
     })
   } else {
     camera.shotStream(url, {
-      renderDelay: process.env.SCREENSHOT_TIMEOUT||6000
+      renderDelay: waitTime
     }, function(err, s) {
       s.on('error',function (err) {
         console.log('[%s] get ScreenShot fail',formatTime(),err)
