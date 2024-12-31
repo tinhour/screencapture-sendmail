@@ -88,7 +88,7 @@ app.get('/capturePageDownload', function(req, res) {
 app.get('/capturePageShow', function(req, res) {
     var captureStart=new Date();
     var url = req.query.url;
-    var waitTime=req.query.waitTime||6000;
+    var waitTime=req.query.waitTime||process.env.SCREENSHOT_TIMEOUT||6000;
     if (!validateUrl(url)) {
       console.log('[%s] url format error  [%s] not validated',formatTime(),url);
         res.json({
@@ -124,7 +124,7 @@ app.get('/capturePageShow', function(req, res) {
 app.get('/capturePageBase64JSON', function(req, res) {
     var captureStart=new Date();
     var url = req.query.url;
-    var waitTime=req.query.waitTime||6000;
+    var waitTime=req.query.waitTime||process.env.SCREENSHOT_TIMEOUT||6000;
     if (!validateUrl(url)) {
         console.log('[%s] url format error  [%s] not validated',formatTime(),url);
         res.json({

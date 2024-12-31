@@ -67,14 +67,29 @@ GET /capturePageBase64JSON?url=https://example.com
 ### 邮件服务
 
 ```http
+# GET 方式
 GET /sendMail?to=recipient@example.com&subject=Test&content=HelloWorld
+
+# POST 方式
+POST /sendMail
+Content-Type: application/json
+
+{
+    "to": "recipient@example.com",
+    "subject": "Test Email",
+    "content": "Hello World",
+    "attachments": [
+        "/path/to/file1.pdf",
+        "/path/to/file2.jpg"
+    ]
+}
 ```
 
 请求参数：
 - `to`: 必填，收件人邮箱地址，多个收件人用逗号分隔
 - `subject`: 必填，邮件主题
 - `content`: 必填，邮件内容（支持 HTML）
-- `attachments`: 可选，附件路径，多个附件用逗号分隔
+- `attachments`: 可选，附件路径，多个附件用数组形式传递（仅 POST 方式支持）
 
 ## ⚙️ 配置说明
 
@@ -102,11 +117,26 @@ const response = await fetch('http://localhost:3000/capturePageBase64JSON?url=ht
 const data = await response.json();
 const base64Image = data.image;
 
-// 发送邮件
+// GET 方式发送邮件
 const mailResponse = await fetch(
     'http://localhost:3001/sendMail?to=test@example.com&subject=Test&content=Hello'
 );
 const result = await mailResponse.json();
+
+// POST 方式发送邮件
+const postResponse = await fetch('http://localhost:3001/sendMail', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+        to: 'test@example.com',
+        subject: 'Test Email',
+        content: '<h1>Hello World</h1>',
+        attachments: ['/path/to/file.pdf']
+    })
+});
+const postResult = await postResponse.json();
 ```
 
 ## 🤝 贡献指南
